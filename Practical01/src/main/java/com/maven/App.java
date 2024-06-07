@@ -18,9 +18,10 @@ public class App
 
 
         // Annotation based configuration
-        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         Student getStudent = context.getBean("student", Student.class);
         System.out.println(getStudent.toString());
+        context.registerShutdownHook();
     }
 
 }
