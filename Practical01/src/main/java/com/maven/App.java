@@ -2,28 +2,25 @@ package com.maven;
 
 import com.maven.entities.Address;
 import com.maven.entities.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
-        Student s = new Student();
-        s.setId(1);
-        s.setName("Sanket Ilake");
-        s.setAge((short) 20);
-        s.setContact("7057891106");
-        Address a = new Address();
-        a.setCountry("India");
-        a.setState("Maharashtra");
-        a.setPinCode("416234");
-        a.setCity("Kolhapur");
-        s.setAddress(a);
+        // This is xml based configuration
+//        ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
+//        Student student = context.getBean("student", Student.class);
+//        System.out.println(student.toString());
 
 
-        System.out.println(s.toString());
+        // Annotation based configuration
+        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        Student getStudent = context.getBean("student", Student.class);
+        System.out.println(getStudent.toString());
     }
+
 }
