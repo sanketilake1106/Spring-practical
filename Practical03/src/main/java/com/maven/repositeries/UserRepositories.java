@@ -31,10 +31,10 @@ public class UserRepositories {
         return user;
     }
 
-    public List<User> selectUser(User user1) throws SQLException, ClassNotFoundException {
+    public List<User> selectUser(String UserCity) throws SQLException, ClassNotFoundException {
         Connection connection1 = connection.getConnection();
-        PreparedStatement ps = connection1.prepareStatement("SELECT * FROM user WHERE userName = ?");
-        ps.setString(1, user1.getUserName());
+        PreparedStatement ps = connection1.prepareStatement("SELECT * FROM user WHERE userName LIKE ?");
+        ps.setString(1, UserCity+"%" );
         ps.execute();
         ResultSet resultSet = ps.getResultSet();
         List<User> userList = new ArrayList<>();
@@ -49,6 +49,17 @@ public class UserRepositories {
         }
         return userList;
     }
+
+    public Boolean selectUserByEmailOrContact(User user) throws SQLException, ClassNotFoundException {
+        Connection connection1 = connection.getConnection();
+        PreparedStatement ps = connection1.prepareStatement("SELECT * FROM user WHERE userName = ? OR userContact = ?");
+        ps.setString(1, user.getUserName());
+        ps.setString(2, user.getUserContact());
+        ps.executeQuery();
+        ResultSet rs = ps.getResultSet();
+        return rs.next();
+    }
+
 
     public List<User> deletUser(Long id) throws SQLException, ClassNotFoundException {
         Connection connection2 = connection.getConnection();

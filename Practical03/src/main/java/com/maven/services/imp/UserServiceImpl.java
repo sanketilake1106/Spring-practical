@@ -15,13 +15,15 @@ public class UserServiceImpl implements UserService {
     private UserRepositories userRepositories;
 
     @Override
-    public User createUser(User user) throws SQLException, ClassNotFoundException {
-        return userRepositories.insertUser(user);
+    public User createUser(User user) throws Exception {
+            return userRepositories.insertUser(user);
     }
 
     @Override
-    public List<User> getAllUser(User user1) throws Exception {
-        return userRepositories.selectUser(user1);
+//    public List<User> getAllUser(User user1) throws Exception {
+//        return userRepositories.selectUser(user1);
+    public List<User> getAllUser(String UserCity) throws SQLException, ClassNotFoundException {
+        return userRepositories.selectUser(UserCity);
     }
 
     @Override
@@ -34,5 +36,9 @@ public class UserServiceImpl implements UserService {
         return userRepositories.updateUser(user);
     }
 
+    @Override
+    public boolean isUserExist(User user) throws Exception {
+        return userRepositories.selectUserByEmailOrContact(user);
+    }
 
 }

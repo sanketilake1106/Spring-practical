@@ -7,38 +7,44 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class UserController {
     @Autowired
     private UserService userService;
 
-    public User addUser() throws SQLException, ClassNotFoundException {
-        User user = new User();
-        user.setUserId(4L);
-        user.setUserName("Omkar");
-        user.setUserContact("9850415263");
-        user.setUserCity("Kolhapur");
-        user.setUserState("Maharashtra");
+    Scanner x = new Scanner(System.in);
+
+    public User addUser(User user) throws Exception {
         userService.createUser(user);
         return user;
     }
 
-    public User selectUser() throws Exception {
-        User user = new User();
-        user.setUserName("Sanket Ilake");
-        return userService.getAllUser(user);
+    public List<User> selectUser() throws Exception {
+        System.out.println("Enter user name to Search");
+        return userService.getAllUser(x.nextLine());
     }
+
 
     public List<User> deletUser() throws Exception {
-        return userService.deletUser(3L);
+        System.out.println("Enter User Id to delete");
+        return userService.deletUser(x.nextLong());
     }
 
-    public User updateUser() throws Exception {
-        User user = new User();
-        user.setUserId(23L);
-        user.setUserName("Tushar Yadhav");
-        user.setUserState("Karnatak");
+    public User updateUser(User user) throws Exception {
+        System.out.println("Search by user name to update");
+        user.setUserName(x.nextLine());
+        System.out.println("Enter updated user id");
+        user.setUserId(x.nextLong());
+        x.nextLine();
+        System.out.println("Enter updated user state");
+        user.setUserState(x.nextLine());
         return userService.updateUser(user);
     }
+
+    public boolean isUserExist(User user) throws Exception {
+        return userService.isUserExist(user);
+    }
+
 }
